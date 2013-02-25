@@ -1,0 +1,75 @@
+; This is a sample configuration for the FetLife iCalendar event export suite.
+; It sets some defaults that you may wish to use, or modify. To start with this,
+; copy this file to `fetlife-icalendar.ini.php`, then make changes there.
+;
+; This file uses "init file" formatting. To learn more about the syntax of this
+; file, please refer to the PHP manual:
+;
+;     http://php.net/parse_ini_file
+;
+;<?php
+; exit('Direct access to this file is prohibited.');
+;// EDIT BELOW THESE LINES.
+;/*
+[FetLife]
+username="YOUR_FETLIFE_NICKNAME_HERE"
+password="YOUR_FETLIFE_PASSWORD_HERE"
+pages="3"       ;// Default number of event pages to get for each place, below.
+rsvps="none"    ;// How many RSVPs to get? "All", "none" or a number of pages.
+summaries="off" ;// When "on", only fetches summaries. Faster, but incomplete.
+;proxyurl="socks://localhost:9050" ; Uncomment to use a proxy.
+
+[Atlanta]
+placeurl="cities/2600" ;// The URL fragment for this place.
+timezone="US/Eastern"  ;// The appropriate timezone string.
+
+[Austin]
+placeurl="cities/9867"
+timezone="US/Central"
+
+[Baltimore]
+placeurl="cities/5898"
+timezone="America/New_York"
+
+[Boston]
+placeurl="cities/5930"
+timezone="America/New_York"
+
+[Denver]
+placeurl="cities/2075"
+timezone="America/Denver"
+
+[London]
+placeurl="administrative_areas/3779"
+timezone="Europe/London"
+
+[New York]
+placeurl="cities/11529"
+timezone="America/New_York"
+
+[Rhode Island]
+placeurl="administrative_areas/3976"
+timezone="America/New_York"
+
+[San Francisco]
+placeurl="cities/1938"
+timezone="America/Los_Angeles"
+
+[Seattle]
+placeurl="cities/11149"
+timezone="America/Vancouver"
+
+[New South Wales]
+placeurl="administrative_areas/160"
+timezone="Australia/NSW"
+
+[Tokyo]
+placeurl="administrative_areas/1653"
+timezone="Asia/Tokyo"
+
+[Washington DC]
+placeurl="administrative_areas/3945"
+timezone="America/New_York"
+
+;*/
+;?>
