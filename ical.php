@@ -1,9 +1,9 @@
 <?php
-require_once 'lib/FetLife/FetLife.php';
-require_once 'lib/iCalcreator/iCalcreator.class.php';
+require_once dirname(__FILE__) . '/lib/FetLife/FetLife.php';
+require_once dirname(__FILE__) . '/lib/iCalcreator/iCalcreator.class.php';
 
 // Load configuration data.
-$flical_config = parse_ini_file('./fetlife-icalendar.ini.php', true);
+$flical_config = parse_ini_file(dirname(__FILE__) . '/fetlife-icalendar.ini.php', true);
 if (!$flical_config) {
     die("Failed to load configuration file.");
 }
