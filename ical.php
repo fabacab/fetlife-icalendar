@@ -15,13 +15,17 @@ if (!empty($_GET['refresh'])) {
     $web_opts['refresh'] = trim(strip_tags($_GET['refresh']));
 }
 // Then the command line.
-$cli_opts = getopt('', array('refresh::')); // Long options only.
+$cli_opts = getopt('h', array('help', 'refresh:'));
 $fin_opts = array_replace($web_opts, $cli_opts); // CLI overrides Web.
 
 // Process options.
 $places = $flical_config; // But first, copy the config array.
 foreach ($fin_opts as $opt_key => $opt_val) {
     switch ($opt_key) {
+        case 'h':
+        case 'help':
+            $usage = 'php ical.php [-h|--help] [--refresh="PLACE_1"[, --refresh="PLACE_2"]]';
+            exit("$usage\n");
         case 'r':
         case 'refresh':
             // Filter out the places that don't match the refresh options.
@@ -51,6 +55,9 @@ while ($place = array_splice($places, 0, 1)) {
     if (!$place[$k]['placeurl'] || !$place[$k]['timezone']) {
         continue;
     }
+
+    // TODO: Create logging (and "log rotation"-like) config options so that we
+    //       can ultimately also store event history, not just upcoming events.
 
     // Set export options for this place.
     $num_pages = ($place[$k]['pages']) ? $place[$k]['pages'] : $flical_config['FetLife']['pages'];
@@ -97,7 +104,7 @@ while ($place = array_splice($places, 0, 1)) {
 
     $x = $FL->getUpcomingEventsInLocation($place[$k]['placeurl'], $num_pages);
     foreach ($x as $event) {
-        // If the "summaries" option is set, don't populate any event data.
+        // If the "summaries" option is enabled, don't populate any event data.
         if (!$summaries) {
             $event->populate($populate);
         }
