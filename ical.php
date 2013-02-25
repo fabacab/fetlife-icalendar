@@ -39,7 +39,7 @@ if ($flical_config['FetLife']['proxyurl']) {
         ('socks' === $p['scheme']) ? CURLPROXY_SOCKS5 : CURLPROXY_HTTP
     );
 }
-$FL->logIn() or die("Failed to log in to FetLife.");
+$FL->logIn() or die("Failed to log in to FetLife. Last HTML received: {$FL->connection->cur_page}");
 
 // All your events are belong to us.
 while ($place = array_splice($places, 0, 1)) {
