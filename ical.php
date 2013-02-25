@@ -8,6 +8,29 @@ if (!$flical_config) {
     die("Failed to load configuration file.");
 }
 
+// Parse script options, however we got them.
+// First the Web.
+$web_opts = array();
+if (!empty($_GET['refresh'])) {
+    $web_opts['refresh'] = trim(strip_tags($_GET['refresh']));
+}
+// Then the command line.
+$cli_opts = getopt('', array('refresh::')); // Long options only.
+$fin_opts = array_replace($web_opts, $cli_opts); // CLI overrides Web.
+
+// Process options.
+$places = $flical_config; // But first, copy the config array.
+foreach ($fin_opts as $opt_key => $opt_val) {
+    switch ($opt_key) {
+        case 'r':
+        case 'refresh':
+            // Filter out the places that don't match the refresh options.
+            if (is_string($opt_val)) { $opt_val = array($opt_val); }
+            $places = array_intersect_key($places, array_flip($opt_val));
+            break;
+    }
+}
+
 $FL = new FetLifeUser($flical_config['FetLife']['username'], $flical_config['FetLife']['password']);
 if ($flical_config['FetLife']['proxyurl']) {
     $p = parse_url($flical_config['FetLife']['proxyurl']);
@@ -19,7 +42,6 @@ if ($flical_config['FetLife']['proxyurl']) {
 $FL->logIn() or die("Failed to log in to FetLife.");
 
 // All your events are belong to us.
-$places = $flical_config; // Copy the config array.
 while ($place = array_splice($places, 0, 1)) {
     if ($place['FetLife']) { continue; }
     // Get key of first item, which is the place name.
