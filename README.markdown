@@ -60,6 +60,7 @@ Default place options that can be set in the `FetLife` place are:
 * `pages`: Default number of event pages to get for each place.
 * `rsvps`: How many pages of RSVPs to get for each event. `"All"`, `"none"`, or a number of pages. Default is `"none"`.
 * `summaries`: If set to `"on"`, only event summaries are fetched. This will override the value of `rsvps`. May be useful if your `pages` value is very high and all you need is basic event data. Default is `"off"`.
+* `archive`: If set to `"on"`, saves existing iCalendar file with a timestamp rather than overwriting it. Default is `"off"`.
 
 It is a good idea to set some defaults. ;)
 
@@ -78,6 +79,7 @@ In addition to the required settings listed above, you can define per-place expo
     * `none`: Do not fetch RSVPs for events. (This is the default.)
     * *INTEGER*: The number of RSVP pages to fetch. (A value of `"1"` is a maximum of 10 RSVPs, `"2"` is a maximum of 20 RSVPs, and so on.)
 * `summaries`: Can be either `"on"` or `"off"` (the default). When `"on"`, only basic event data will be fetched, and the value of `rsvps`, if set, is ignored.
+* `archive`: Can be either `"on"` or `"off"` (the default). When `"on"`, an existing iCalendar file for this place will be copied to an archive file rather than overwritten. Useful for saving history of past runs. Alternatively, use your system's `logrotate(8)` or equivalent.
 
 Options specified here override any default set in [the `FetLife` place](#the-fetlife-place).
 
@@ -91,6 +93,7 @@ The following is an example configuration file.
     pages="5"       ;// Default number of event pages to get for each place, below.
     rsvps="none"    ;// How many RSVPs to get? "All", "none" or a number of pages.
     summaries="off" ;// When "on", only fetches summaries. Faster, but incomplete.
+    archive="off"   ;// When "on", saves files produced from previous incovations.
 
     [Atlanta]
     placeurl="cities/2600"
@@ -101,6 +104,7 @@ The following is an example configuration file.
     [Boston]
     placeurl="cities/5930"
     timezone="America/New_York"
+    archive="on"
 
     [London]
     placeurl="administrative_areas/3779"

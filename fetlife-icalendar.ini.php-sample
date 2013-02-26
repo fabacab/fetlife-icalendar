@@ -17,6 +17,7 @@ password="YOUR_FETLIFE_PASSWORD_HERE"
 pages="3"       ;// Default number of event pages to get for each place, below.
 rsvps="none"    ;// How many RSVPs to get? "All", "none" or a number of pages.
 summaries="off" ;// When "on", only fetches summaries. Faster, but incomplete.
+archive="off"   ;// When "on", saves files produced from previous incovations.
 ;proxyurl="socks://localhost:9050" ; Uncomment to use a proxy.
 
 [Atlanta]

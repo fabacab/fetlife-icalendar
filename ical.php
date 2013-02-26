@@ -56,9 +56,6 @@ while ($place = array_splice($places, 0, 1)) {
         continue;
     }
 
-    // TODO: Create logging (and "log rotation"-like) config options so that we
-    //       can ultimately also store event history, not just upcoming events.
-
     // Set export options for this place.
     $num_pages = ($place[$k]['pages']) ? $place[$k]['pages'] : $flical_config['FetLife']['pages'];
     switch ($num_rsvps = strtolower(
@@ -74,6 +71,7 @@ while ($place = array_splice($places, 0, 1)) {
             $populate = (int) $num_rsvps;
             break;
     }
+    // TODO: Refactor "on"/"off" (bool) config processing so it's in a function?
     switch ($summaries = strtolower(
         ($place[$k]['summaries']) ? $place[$k]['summaries'] : $flical_config['FetLife']['summaries']
     )) {
@@ -83,6 +81,17 @@ while ($place = array_splice($places, 0, 1)) {
         case 'off':
         default:
             $summaries = false;
+            break;
+    }
+    switch ($archive = strtolower(
+        ($place[$k]['archive']) ? $place[$k]['archive'] : $flical_config['FetLife']['archive']
+    )) {
+        case 'on':
+            $archive = true;
+            break;
+        case 'off':
+        default:
+            $archive = false;
             break;
     }
 
@@ -153,10 +162,18 @@ while ($place = array_splice($places, 0, 1)) {
     // Set timezone offsets.
     iCalUtilityFunctions::createTimezone($vcal, $place[$k]['timezone']);
 
+    $icalfile = str_replace(' ', '_', key($place)) . '.ics';
+    if ($archive && is_readable($icalfile)) {
+        $time = time();
+        if (!copy($icalfile, "$icalfile.archived.$time")) {
+            error_log("Unable to archive to $icalfile.archived.$time.");
+        }
+    }
+
     // Finally, print the file.
     // TODO: Create an output directory option.
     //$vcal->setConfig('directory', 'ical');
-    $vcal->setConfig('filename', str_replace(' ', '_', key($place)) . '.ics');
+    $vcal->setConfig('filename', $icalfile);
     $vcal->saveCalendar();
 }
 ?>
