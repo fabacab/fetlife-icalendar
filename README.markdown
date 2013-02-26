@@ -31,7 +31,7 @@ This section documents configuration options availalbe to FetLife iCalendar.
 
 The configuration file uses [PHP's `ini` file](http://php.net/parse_ini_file) syntax.
 
-FetLife iCalendar looks for a configuration filen named `fetlife-icalendar.ini.php` in the same directory as its main workhorse script, `ical.php`. The program ships with a sample configuration file called `fetlife-icalendar.ini.php-sample`. Rename or copy the sample file to the expected name to use its settings.
+FetLife iCalendar looks for a configuration file named `fetlife-icalendar.ini.php` in the same directory as its main workhorse script, `ical.php`. The program ships with a sample configuration file called `fetlife-icalendar.ini.php-sample`. Rename or copy the sample file to the expected name to use its settings.
 
 ### Places
 

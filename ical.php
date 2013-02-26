@@ -121,6 +121,8 @@ while ($place = array_splice($places, 0, 1)) {
         $desc = trim($event->description);
         $desc .= ($event->cost) ? "\n\nCost: {$event->cost}" : '';
         $desc .= ($event->dress_code) ? "\n\nDress code: {$event->dress_code}" : '';
+        // Some iCalendar clients don't display a URL property, so embed it.
+        $desc .= "\n\nvia {$event->getPermalink()}";
         $vevent->setProperty('description', $desc);
         $vevent->setProperty('url', $event->getPermalink());
         if ($event->created_by) {
