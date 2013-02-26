@@ -17,8 +17,8 @@ if ($files) {
     foreach ($files as $file) {
 ?>
     <li>
-        <a href="<?php printHTMLSafe($file);?>"><?php printHTMLSafe(str_replace('_', ' ', basename($file, '.ics')));?></a>
-        (<a href="webcal://<?php printHTMLSafe($_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/$file");?>">webcal</a>)
+        <a href="<?php printHTMLSafe(urlencode($file));?>"><?php printHTMLSafe(str_replace('_', ' ', basename($file, '.ics')));?></a>
+        (<a href="webcal://<?php printHTMLSafe($_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . urlencode($file));?>">webcal</a>)
         [Last updated: <?php printHTMLSafe(@date('F d, Y \a\t g:ia', filemtime($file)));?>,
         size: <?php printHTMLSafe(filesize($file));?> bytes]
     </li>
