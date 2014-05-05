@@ -51,7 +51,7 @@ The configuration file must include at least one place and the special-case `Fet
 
 The following optional configuration options can be set in the `FetLife` place, too:
 
-* `proxyurl`: Whether or not to use a proxy. Must be a URL, such as `"http://example.proxy.com:8080"` (for an HTTP proxy) or `"socks://localhost:9050"` for a SOCKS5 proxy.
+* `proxyurl`: Whether or not to use a proxy. Must either be a URL, such as `"http://example.proxy.com:8080"` (for an HTTP proxy) or `"socks://localhost:9050"` for a SOCKS5 proxy, or the special value `"auto"`, in which case a new, random proxy is selected automatically on each run.
 
 Additionally, the `FetLife` place can optionally also define default settings that will be used for all other places. If a setting exists in both the `FetLife` place and another place, the setting from the latter place is used (overriding the default one specified in the `FetLife` place).
 
