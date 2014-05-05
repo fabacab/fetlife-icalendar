@@ -39,33 +39,14 @@ $FL = new FetLifeUser($flical_config['FetLife']['username'], $flical_config['Fet
 if ($flical_config['FetLife']['proxyurl']) {
     // Grab a new proxy if automatic selection is enabled.
     if ('auto' === $flical_config['FetLife']['proxyurl']) {
-        $ch = curl_init(
-            'http://www.xroxy.com/proxylist.php?port=&type=Anonymous&ssl=ssl&country=&latency=&reliability=5000'
-        );
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $html = curl_exec($ch);
-        curl_close($ch);
-
-        $dom = new DOMDocument();
-        @$dom->loadHTML($html);
-        $rows = $dom->getElementsByTagName('tr');
-        $urls = array();
-        foreach ($rows as $row) {
-            if (0 === strpos($row->getAttribute('class'), 'row')) {
-                $str = $row->getElementsByTagName('a')->item(0)->getAttribute('href');
-                parse_str($str);
-                $urls[] = array('host' => $host, 'port' => $port);
-            }
-        }
-        $n = mt_rand(0, count($urls) - 1); // choose a random proxy from the scraped list
-        $p = parse_url("https://{$urls[$n]['host']}:{$urls[$n]['port']}");
+        $FL->connection->setProxy('auto');
     } else { // use provided proxyurl value.
         $p = parse_url($flical_config['FetLife']['proxyurl']);
+        $FL->connection->setProxy(
+            "{$p['host']}:{$p['port']}",
+            ('socks' === $p['scheme']) ? CURLPROXY_SOCKS5 : CURLPROXY_HTTP
+        );
     }
-    $FL->connection->setProxy(
-        "{$p['host']}:{$p['port']}",
-        ('socks' === $p['scheme']) ? CURLPROXY_SOCKS5 : CURLPROXY_HTTP
-    );
 }
 $FL->logIn() or die("Failed to log in to FetLife. Last HTML received: {$FL->connection->cur_page}");
 
